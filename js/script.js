@@ -49,8 +49,10 @@ function getRandomQuote() {
   return Math.floor(Math.random() * quotes.length) 
 }
 
+/*get random rgb color value*/
 const randomValue = () => Math.floor(Math.random() * 256);
 
+/*fuction to set the RGB values with random values*/
 function randomRGB(value) {
   const color = `rgb( ${value()}, ${value()}, ${value()} )`; 
   return color;
@@ -65,8 +67,8 @@ var body = document.querySelector('body');
 function printQuote() {
   const randomIndex = getRandomQuote();
   const quoteData = quotes[randomIndex];
-  htmlBackground = `${randomRGB(randomValue)} `
-  
+
+  /*Start building new html string with quote info*/
   let html = `<p class="quote">${quoteData.quote}</p>
               <p class="source"> ${quoteData.source}`
   
@@ -79,11 +81,17 @@ function printQuote() {
   if (quoteData.year) {
     html +=  `<span class="citation" font-color => ${quoteData.year} </span>`
   }
+
   /*Condition to check if tags are populated, if so add to span*/
   if (quoteData.tags) {
-  html +=  `<span class="citation"> ${quoteData.tags.join(', ')} </span>`
+    html +=  `<span class="citation"> ${quoteData.tags.join(', ')} </span>`
   }
+
+  /*close paragraph tag */
+  html += `</p>`
   
+  /*Get new background colors*/
+  htmlBackground = `${randomRGB(randomValue)} `
   
   /*Inject new random background color value*/
   body.style.backgroundColor = htmlBackground ;
@@ -91,7 +99,6 @@ function printQuote() {
   /*replace quote-box with html string*/
   document.getElementById('quote-box').innerHTML = html;
 }
-
 
 /***
  * click event listener for the print quote button
