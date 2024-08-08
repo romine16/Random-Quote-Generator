@@ -37,8 +37,8 @@ const quotes = [
   {
     quote:'Life is like riding a bicycle. To keep your balance, you must keep moving.',
     source:'Albert Einstein',
-    year: 1930,
-    tags: ['Inspiration', 'Movitation']
+    year: 1930
+  
   }
 ];
 
@@ -49,6 +49,15 @@ function getRandomQuote() {
   return Math.floor(Math.random() * quotes.length) 
 }
 
+const randomValue = () => Math.floor(Math.random() * 256);
+
+function randomRGB(value) {
+  const color = `rgb( ${value()}, ${value()}, ${value()} )`; 
+  return color;
+}
+
+/*Get body element and will update with random color value*/
+var body = document.querySelector('body');
 
 /***
  * `printQuote` function
@@ -56,21 +65,29 @@ function getRandomQuote() {
 function printQuote() {
   const randomIndex = getRandomQuote();
   const quoteData = quotes[randomIndex];
-  /*const randomQuote = `${quotes[randomIndex].quote}`;*/
-  /*const randomQuoteSource = `${quotes[randomIndex].source}`;*/
+  htmlBackground = `${randomRGB(randomValue)} `
+  
   let html = `<p class="quote">${quoteData.quote}</p>
-              <p class="source"> ${quoteData.source} `
+              <p class="source"> ${quoteData.source}`
   
   /*Condition to check if citation is populated, if so add to span*/
   if (quoteData.citation) {
-    html +=  `<span class="citation"> ${quoteData.citation} </span>`
+    html +=  `<span class="citation" > ${quoteData.citation} </span>`
   }
 
   /*Condition to check if year is populated, if so add to span*/
   if (quoteData.year) {
-    html +=  `<span class="citation"> ${quoteData.year} </span>`
-}
- 
+    html +=  `<span class="citation" font-color => ${quoteData.year} </span>`
+  }
+  /*Condition to check if tags are populated, if so add to span*/
+  if (quoteData.tags) {
+  html +=  `<span class="citation"> ${quoteData.tags.join(', ')} </span>`
+  }
+  
+  
+  /*Inject new random background color value*/
+  body.style.backgroundColor = htmlBackground ;
+
   /*replace quote-box with html string*/
   document.getElementById('quote-box').innerHTML = html;
 }
